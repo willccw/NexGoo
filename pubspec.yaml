@@ -37,6 +37,7 @@ dependencies:
   english_words: ^4.0.0
   flutter_launch: ^0.3.0
   intl:
+  firebase_core: ^1.15.0
 
 dev_dependencies:
   flutter_lints: ^1.0.0

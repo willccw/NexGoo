@@ -2,8 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:NexGoo/core/res/color.dart';
 import 'package:NexGoo/core/routes/routes.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'dart:developer';
 
-void main() {
+void main() async {
+  log("start_firebase");
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  log("completed_firebase");
+
   runApp(const MyApp());
 }
 
