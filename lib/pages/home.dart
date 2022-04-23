@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
@@ -83,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: SafeArea(
         child: ListView(
-          padding: const EdgeInsets.symmetric(vertical: 30.0),
+          padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 5),
           children: <Widget>[
             const Padding(
               padding: EdgeInsets.only(left: 20.0, right: 120.0),
@@ -111,7 +113,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   ElevatedButton(
                     child: const Text('My Lessons'),
-                    onPressed: () {},
+                    onPressed: () {
+                      log('dddkkk');
+                      Navigator.pushReplacementNamed(context, Routes.myLesson);
+                    },
                   ),
                 ],
               ),

@@ -123,9 +123,23 @@ class _DetailScreen extends State<DetailScreen> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+      appBar: AppBar(
+        leading: Icon(Icons.account_circle_rounded),
+        title: Text("Nexgoo"),
+        actions: [
+          // Container(
+          //   width: 30,
+          //   child: Image.asset(
+          //     'images/lake.jpeg',
+          //   ),
+          // ),
+          Icon(Icons.more_vert),
+        ],
+      ),
       body: SafeArea(
         child: ListView(
           children: <Widget>[
+            SizedBox(height: 50.0),
             GFCarousel(
               hasPagination: true,
               items: imageList.map(
@@ -156,9 +170,56 @@ class _DetailScreen extends State<DetailScreen> {
                 'half-hour walk through pastures and pine forest, leads you to the '
                 'lake, which warms to 20 degrees Celsius in the summer. Activities '
                 'enjoyed here include rowing, and riding the summer toboggan run.'),
-            _buildButtonSection("+85294380780", "hi")
+
+            // _buildButtonSection("+85294380780", "hi")
           ],
         ),
+      ),
+      bottomNavigationBar: Row(
+        children: [
+          Material(
+            color: const Color(0xff4696EC),
+            child: InkWell(
+              onTap: () {
+                Navigator.pushReplacementNamed(context, Routes.home);
+              },
+              child: const SizedBox(
+                height: kToolbarHeight,
+                width: 100,
+                child: Center(
+                  child: Text(
+                    'Back',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Color(0xffFAFAFA)),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Material(
+              color: const Color(0xff2CB343),
+              child: InkWell(
+                onTap: () {
+                  //print('called on tap');
+                },
+                child: const SizedBox(
+                  height: kToolbarHeight,
+                  width: double.infinity,
+                  child: Center(
+                    child: Text(
+                      'Whatsapp',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xffFAFAFA)),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

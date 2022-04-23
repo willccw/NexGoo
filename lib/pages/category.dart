@@ -2,6 +2,7 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:NexGoo/core/res/app.dart';
+import 'package:NexGoo/core/routes/routes.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({Key? key}) : super(key: key);
@@ -41,78 +42,116 @@ class _CatogaryState extends State<CategoryScreen> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      body: SafeArea(
-          child: GridView.count(
-        primary: false,
-        padding: const EdgeInsets.all(0),
-        crossAxisSpacing: 0,
-        mainAxisSpacing: 0,
-        crossAxisCount: 2,
-        childAspectRatio: (0.26 / .405),
-        children: <Widget>[
-          _buildGFCard(
-              AppConstants.lakeImage,
-              AppConstants.lakeImage,
-              "How to make a Pizza?",
-              "hi",
-              "I will teach you how to make a pizza in 3 days"),
-          _buildGFCard(
-              AppConstants.lakeImage,
-              AppConstants.lakeImage,
-              "How to make a Pizza?",
-              "hi",
-              "I will teach you how to make a pizza in 3 days"),
-          _buildGFCard(
-              AppConstants.lakeImage,
-              AppConstants.lakeImage,
-              "How to make a Pizza?",
-              "hi",
-              "I will teach you how to make a pizza in 3 days"),
-          _buildGFCard(
-              AppConstants.lakeImage,
-              AppConstants.lakeImage,
-              "How to make a Pizza?",
-              "hi",
-              "I will teach you how to make a pizza in 3 days"),
-          _buildGFCard(
-              AppConstants.lakeImage,
-              AppConstants.lakeImage,
-              "How to make a Pizza?",
-              "hi",
-              "I will teach you how to make a pizza in 3 days"),
-
+      appBar: AppBar(
+        leading: Icon(Icons.account_circle_rounded),
+        title: Text("Food"),
+        actions: [
           // Container(
-          //   padding: const EdgeInsets.all(8),
-          //   child: const Text("He'd have you all unravel at the"),
-          //   color: Colors.teal[100],
+          //   width: 30,
+          //   child: Image.asset(
+          //     'images/lake.jpeg',
+          //   ),
           // ),
-          // Container(
-          //   padding: const EdgeInsets.all(8),
-          //   child: const Text('Heed not the rabble'),
-          //   color: Colors.teal[200],
-          // ),
-          // Container(
-          //   padding: const EdgeInsets.all(8),
-          //   child: const Text('Sound of screams but the'),
-          //   color: Colors.teal[300],
-          // ),
-          // Container(
-          //   padding: const EdgeInsets.all(8),
-          //   child: const Text('Who scream'),
-          //   color: Colors.teal[400],
-          // ),
-          // Container(
-          //   padding: const EdgeInsets.all(8),
-          //   child: const Text('Revolution is coming...'),
-          //   color: Colors.teal[500],
-          // ),
-          // Container(
-          //   padding: const EdgeInsets.all(8),
-          //   child: const Text('Revolution, they...'),
-          //   color: Colors.teal[600],
-          // ),
+          Icon(Icons.more_vert),
         ],
-      )),
+      ),
+      //   body:Container(
+      //       child: Column(
+      //         crossAxisAlignment: CrossAxisAlignment.start,
+      //         children: [
+      //           Text("Top"),
+      //           Expanded(
+      //             child: Row(
+      //               children: [
+      //                 Expanded(
+      //                   child: GridView.builder(
+      //                     scrollDirection: Axis.horizontal,
+      //                     itemCount: 10,
+      //                     gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+      //                         crossAxisCount: 2),
+      //                     itemBuilder: (BuildContext context, int index) {
+      //                       return Text(index.toString());
+      //                     },
+      //                   ),
+      //                 )
+      //               ],
+      //             ),
+      //           ),
+      //           Text("Trending"),
+      //           Expanded(
+      //             child: Row(
+      //               children: [
+      //                 Expanded(
+      //                   child: GridView.builder(
+      //                     scrollDirection: Axis.horizontal,
+      //                     itemCount: 10,
+      //                     gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+      //                         crossAxisCount: 2),
+      //                     itemBuilder: (BuildContext context, int index) {
+      //                       return Text(index.toString());
+      //                     },
+      //                   ),
+      //                 )
+      //               ],
+      //             ),
+      //           ),
+      //         ],
+      //       )),
+      // );
+
+      body: SafeArea(
+        child: GridView.count(
+          primary: false,
+          padding: const EdgeInsets.all(0),
+          crossAxisSpacing: 0,
+          mainAxisSpacing: 0,
+          crossAxisCount: 2,
+          childAspectRatio: (0.273 / .40),
+          children: <Widget>[
+            _buildGFCard(
+                AppConstants.lakeImage,
+                AppConstants.lakeImage,
+                "How to make a Pizza?",
+                "hi",
+                "I will teach you how to make a pizza in 3 days"),
+            _buildGFCard(
+                AppConstants.lakeImage,
+                AppConstants.lakeImage,
+                "How to make a Pizza?",
+                "hi",
+                "I will teach you how to make a pizza in 3 days"),
+            _buildGFCard(
+                AppConstants.lakeImage,
+                AppConstants.lakeImage,
+                "How to make a Pizza?",
+                "hi",
+                "I will teach you how to make a pizza in 3 days"),
+            _buildGFCard(
+                AppConstants.lakeImage,
+                AppConstants.lakeImage,
+                "How to make a Pizza?",
+                "hi",
+                "I will teach you how to make a pizza in 3 days"),
+            _buildGFCard(
+                AppConstants.lakeImage,
+                AppConstants.lakeImage,
+                "How to make a Pizza?",
+                "hi",
+                "I will teach you how to make a pizza in 3 days"),
+          ],
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: RaisedButton(
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, Routes.home);
+          },
+          color: Colors.blue,
+          textColor: Colors.white,
+          child: Text('Back'),
+        ),
+      ),
     );
   }
 }
