@@ -116,7 +116,7 @@ class _DetailScreen extends State<DetailScreen> {
   }
 
   final List<String> imageList = [
-    "https://cdn.pixabay.com/photo/2017/12/03/18/04/christmas-balls-2995437_960_720.jpg",
+    "https://image.cookly.me/images/pizza-making-class-rome.jpeg",
     "https://cdn.pixabay.com/photo/2017/12/13/00/23/christmas-3015776_960_720.jpg",
     "https://cdn.pixabay.com/photo/2019/12/19/10/55/christmas-market-4705877_960_720.jpg",
     "https://cdn.pixabay.com/photo/2019/12/20/00/03/road-4707345_960_720.jpg",

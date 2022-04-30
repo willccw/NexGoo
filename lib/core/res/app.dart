@@ -6,4 +6,5 @@ class AppConstants {
   static const String _images = _assets + "/images";
 
   static const String lakeImage = _images + "/lake.jpeg";
+  static const String pizzaImage = _images + "/pizza.jpeg";
 }

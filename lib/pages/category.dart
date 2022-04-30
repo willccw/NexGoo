@@ -138,7 +138,7 @@ class _CatogaryState extends State<CategoryScreen> {
                       return ListView(
                         children: [
                           for (var i in documents)
-                            _buildGFCard(AppConstants.lakeImage,
+                            _buildGFCard(AppConstants.pizzaImage,
                                 i["lesson_title"], i["lesson_subtitle"], i.id)
                         ],
                       );

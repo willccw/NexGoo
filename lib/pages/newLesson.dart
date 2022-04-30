@@ -36,7 +36,6 @@ class _NewLessonState extends State<NewLessonScreen> {
           "lesson_subtitle": subtitle,
           "lesson_title": title,
           "lesson_viewCount": 0,
-          "lesson_viewCount": 0,
           "lesson_whatsapp": int.parse(whatsapp),
         })
         .then((value) => {
