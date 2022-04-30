@@ -1,8 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:flutter_launch/flutter_launch.dart';
 
 import 'package:NexGoo/core/routes/routes.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DetailScreen extends StatefulWidget {
   const DetailScreen({Key? key}) : super(key: key);
@@ -121,7 +126,10 @@ class _DetailScreen extends State<DetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Object? s = ModalRoute.of(context)!.settings.arguments;
+    log(s.toString());
     // TODO: implement build
+
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.account_circle_rounded),
@@ -161,15 +169,62 @@ class _DetailScreen extends State<DetailScreen> {
                 });
               },
             ),
-            _buildSection("How to make a Pizza?",
-                "I will teach you how to make a pizza in 3 days", "4"),
-            _buildtextSection(
-                'Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese '
-                'Alps. Situated 1,578 meters above sea level, it is one of the '
-                'larger Alpine Lakes. A gondola ride from Kandersteg, followed by a '
-                'half-hour walk through pastures and pine forest, leads you to the '
-                'lake, which warms to 20 degrees Celsius in the summer. Activities '
-                'enjoyed here include rowing, and riding the summer toboggan run.'),
+            FutureBuilder<QuerySnapshot>(
+              future: FirebaseFirestore.instance.collection('Lesson').get(),
+              builder: (BuildContext context, snapshot) {
+                if (snapshot.hasData) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    log('hasData');
+                    return Center(
+                      widthFactor: 0.5,
+                      heightFactor: 0.5,
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    log('hasData print');
+                    final List<QueryDocumentSnapshot<Object?>>? documents =
+                        snapshot.data?.docs;
+                    if (documents != null) {
+                      log(documents.length.toString());
+                      return Container(
+                        child: Column(
+                          children: [
+                            _buildSection(
+                                documents[0]["lesson_title"],
+                                documents[0]["lesson_subtitle"],
+                                documents[0]["lesson_rating"].toString()),
+                            _buildtextSection(
+                                documents[0]["lesson_description"]),
+                          ],
+                        ),
+                      );
+                    }
+                    // for (var i in lessonList)
+                    //   _buildCoolCard(i.title, Icons.local_pizza, i.subtitle);
+                  }
+                  //   return Center(
+                  //       // here only return is missing
+                  //       // child: Text(snapshot.data['email']));
+                  // }
+                } else if (snapshot.hasError) {
+                  log('hasData err');
+
+                  return Text('no data');
+                }
+
+                return CircularProgressIndicator();
+              },
+            ),
+
+            // _buildSection("How to make a Pizza?",
+            //     "I will teach you how to make a pizza in 3 days", "4"),
+            // _buildtextSection(
+            //     'Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese '
+            //     'Alps. Situated 1,578 meters above sea level, it is one of the '
+            //     'larger Alpine Lakes. A gondola ride from Kandersteg, followed by a '
+            //     'half-hour walk through pastures and pine forest, leads you to the '
+            //     'lake, which warms to 20 degrees Celsius in the summer. Activities '
+            //     'enjoyed here include rowing, and riding the summer toboggan run.'),
 
             // _buildButtonSection("+85294380780", "hi")
           ],
@@ -203,6 +258,8 @@ class _DetailScreen extends State<DetailScreen> {
               child: InkWell(
                 onTap: () {
                   //print('called on tap');
+                  launchUrlString(
+                      'https://api.whatsapp.com/send?phone=85261231222&text=I%20want%20to%20make%20a%20booking');
                 },
                 child: const SizedBox(
                   height: kToolbarHeight,

@@ -22,6 +22,7 @@ class RouterGenerator {
       case Routes.detail:
         return MaterialPageRoute(
           builder: ((context) => const DetailScreen()),
+          settings: settings,
         );
       case Routes.category:
         return MaterialPageRoute(

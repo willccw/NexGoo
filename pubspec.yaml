@@ -39,6 +39,7 @@ dependencies:
   intl:
   firebase_core: ^1.15.0
   cloud_firestore: ^3.1.13
+  url_launcher: ^6.1.0
 
 dev_dependencies:
   flutter_lints: ^1.0.0
