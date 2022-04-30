@@ -15,8 +15,8 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CatogaryState extends State<CategoryScreen> {
-  Container _buildGFCard(String imageurl, String iconImage, String titlet,
-      String subtitlet, String contentt, int id) {
+  Container _buildGFCard(
+      String imageurl, String titlet, String subtitlet, int id) {
     return Container(
       child: GFCard(
         padding: const EdgeInsets.all(0),
@@ -140,10 +140,8 @@ class _CatogaryState extends State<CategoryScreen> {
                           for (var i in documents)
                             _buildGFCard(
                                 AppConstants.lakeImage,
-                                AppConstants.lakeImage,
                                 i["lesson_title"],
                                 i["lesson_subtitle"],
-                                "I will teach you how to make a pizza in 3 days",
                                 int.parse(i.id))
                         ],
                       );
