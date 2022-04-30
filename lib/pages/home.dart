@@ -17,9 +17,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class Category {
+  late int id;
   late IconData icon;
   late String label;
-  Category(this.icon, this.label);
+  Category(this.id, this.icon, this.label);
 }
 
 class Lesson {
@@ -49,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
         icon: Icon(cicon));
   }
 
-  Column _buildButtonColumn(Color color, IconData icon, String label) {
+  Column _buildButtonColumn(Color color, IconData icon, String label, int id) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -63,7 +64,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 splashColor: Colors.green,
                 onTap: () {
                   // Get.toNamed(AppRoutes.detailPage);
-                  Navigator.pushReplacementNamed(context, Routes.category);
+                  Navigator.of(context)
+                      .pushReplacementNamed(Routes.category, arguments: id);
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -119,16 +121,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
     Color color = Theme.of(context).primaryColor;
 
-    categoryList.add(Category(Icons.hiking, 'Travel'));
-    categoryList.add(Category(Icons.kitchen, 'Cook'));
-    categoryList.add(Category(Icons.book, 'Learning'));
-    categoryList.add(Category(Icons.sports_gymnastics, 'Sports'));
+    categoryList.add(Category(categoryList.length, Icons.hiking, 'Travel'));
+    categoryList.add(Category(categoryList.length, Icons.kitchen, 'Cook'));
+    categoryList.add(Category(categoryList.length, Icons.book, 'Learning'));
+    categoryList
+        .add(Category(categoryList.length, Icons.sports_gymnastics, 'Sports'));
 
     // categoryList[0].icon = Icons.hiking;
     // categoryList[0].label = 'Travel';
     // categoryList[1].icon = Icons.kitchen;
     // categoryList[1].label = 'Cook';
-    // categoryList[2].icon = Icons.book;
+    // categoryList[2].icon = Icons.book;s
     // categoryList[2].label = 'Learning';
     // categoryList[3].icon = Icons.sports_gymnastics;
     // categoryList[3].label = 'Sports';
@@ -140,7 +143,8 @@ class _HomeScreenState extends State<HomeScreen> {
           // _buildButtonColumn(color, Icons.kitchen, 'Cook'),
           // _buildButtonColumn(color, Icons.book, 'Learning'),
           // _buildButtonColumn(color, Icons.sports_gymnastics, 'Sports'),
-          for (var i in categoryList) _buildButtonColumn(color, i.icon, i.label)
+          for (var i in categoryList)
+            _buildButtonColumn(color, i.icon, i.label, i.id)
         ]
 
         // List.generate(categoryList.length, (index) => {

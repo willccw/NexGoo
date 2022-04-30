@@ -40,6 +40,8 @@ class _CatogaryState extends State<CategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Object? s = ModalRoute.of(context)!.settings.arguments;
+
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(

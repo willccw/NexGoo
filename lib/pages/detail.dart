@@ -189,12 +189,17 @@ class _DetailScreen extends State<DetailScreen> {
                       return Container(
                         child: Column(
                           children: [
-                            _buildSection(
-                                documents[0]["lesson_title"],
-                                documents[0]["lesson_subtitle"],
-                                documents[0]["lesson_rating"].toString()),
-                            _buildtextSection(
-                                documents[0]["lesson_description"]),
+                            for (var a in documents)
+                              if (a.id == s.toString())
+                                Column(
+                                  children: [
+                                    _buildSection(
+                                        a["lesson_title"],
+                                        a["lesson_subtitle"],
+                                        a["lesson_rating"].toString()),
+                                    _buildtextSection(a["lesson_description"]),
+                                  ],
+                                ),
                           ],
                         ),
                       );
