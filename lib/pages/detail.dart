@@ -129,6 +129,10 @@ class _DetailScreen extends State<DetailScreen> {
     Object? s = ModalRoute.of(context)!.settings.arguments;
     log(s.toString());
     // TODO: implement build
+    FirebaseFirestore.instance
+        .collection('Lesson')
+        .doc(s.toString())
+        .update({"lesson_viewCount": FieldValue.increment(1)});
 
     return Scaffold(
       appBar: AppBar(
