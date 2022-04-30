@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:NexGoo/pages/home.dart';
 import 'package:NexGoo/pages/detail.dart';
 import 'package:NexGoo/pages/category.dart';
-import 'package:NexGoo/pages/myLesson.dart';
+import 'package:NexGoo/pages/newLesson.dart';
 
 class Routes {
   static const onBoarding = "/";
   static const home = "/home";
   static const detail = "/detail";
   static const category = "/category";
+
+  ///
   static const myLesson = "/my_lesson";
   static const trending = "/trending";
 }
@@ -31,14 +33,19 @@ class RouterGenerator {
           builder: ((context) => const CategoryScreen()),
           settings: settings,
         );
+
+      ///
       case Routes.myLesson:
         return MaterialPageRoute(
-          builder: (context) => const MyLessonScreen(),
+          builder: (context) => const NewLessonScreen(),
         );
       case Routes.trending:
         return MaterialPageRoute(
           builder: (context) => const TrendingScreen(),
         );
+
+      ///
+      ///
       default:
         return MaterialPageRoute(
           builder: ((context) => const HomeScreen()),

@@ -123,7 +123,8 @@ class _DetailScreen extends State<DetailScreen> {
     "https://cdn.pixabay.com/photo/2019/12/22/04/18/x-mas-4711785__340.jpg",
     "https://cdn.pixabay.com/photo/2016/11/22/07/09/spruce-1848543__340.jpg"
   ];
-
+  String whatsapp =
+      "https://api.whatsapp.com/send?phone=85261231222&text=I%20want%20to%20make%20a%20booking";
   @override
   Widget build(BuildContext context) {
     Object? s = ModalRoute.of(context)!.settings.arguments;
@@ -179,7 +180,7 @@ class _DetailScreen extends State<DetailScreen> {
                 if (snapshot.hasData) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     log('hasData');
-                    return Center(
+                    return const Center(
                       widthFactor: 0.5,
                       heightFactor: 0.5,
                       child: CircularProgressIndicator(),
@@ -189,23 +190,25 @@ class _DetailScreen extends State<DetailScreen> {
                     final List<QueryDocumentSnapshot<Object?>>? documents =
                         snapshot.data?.docs;
                     if (documents != null) {
+                      // setState(() => whatsapp =
+                      //     "https://api.whatsapp.com/send?phone=852" +
+                      //         documents[0]["lesson_whatsapp"].toString() +
+                      //         "&text=I%20want%20to%20make%20a%20booking");
                       log(documents.length.toString());
-                      return Container(
-                        child: Column(
-                          children: [
-                            for (var a in documents)
-                              if (a.id == s.toString())
-                                Column(
-                                  children: [
-                                    _buildSection(
-                                        a["lesson_title"],
-                                        a["lesson_subtitle"],
-                                        a["lesson_rating"].toString()),
-                                    _buildtextSection(a["lesson_description"]),
-                                  ],
-                                ),
-                          ],
-                        ),
+                      return Column(
+                        children: [
+                          for (var a in documents)
+                            if (a.id == s.toString())
+                              Column(
+                                children: [
+                                  _buildSection(
+                                      a["lesson_title"],
+                                      a["lesson_subtitle"],
+                                      a["lesson_rating"].toString()),
+                                  _buildtextSection(a["lesson_description"]),
+                                ],
+                              ),
+                        ],
                       );
                     }
                     // for (var i in lessonList)
@@ -267,8 +270,7 @@ class _DetailScreen extends State<DetailScreen> {
               child: InkWell(
                 onTap: () {
                   //print('called on tap');
-                  launchUrlString(
-                      'https://api.whatsapp.com/send?phone=85261231222&text=I%20want%20to%20make%20a%20booking');
+                  launchUrlString(whatsapp);
                 },
                 child: const SizedBox(
                   height: kToolbarHeight,

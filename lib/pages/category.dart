@@ -16,7 +16,7 @@ class CategoryScreen extends StatefulWidget {
 
 class _CatogaryState extends State<CategoryScreen> {
   Container _buildGFCard(
-      String imageurl, String titlet, String subtitlet, int id) {
+      String imageurl, String titlet, String subtitlet, String id) {
     return Container(
       child: GFCard(
         padding: const EdgeInsets.all(0),
@@ -138,11 +138,8 @@ class _CatogaryState extends State<CategoryScreen> {
                       return ListView(
                         children: [
                           for (var i in documents)
-                            _buildGFCard(
-                                AppConstants.lakeImage,
-                                i["lesson_title"],
-                                i["lesson_subtitle"],
-                                int.parse(i.id))
+                            _buildGFCard(AppConstants.lakeImage,
+                                i["lesson_title"], i["lesson_subtitle"], i.id)
                         ],
                       );
                     }

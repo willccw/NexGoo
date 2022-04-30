@@ -37,10 +37,10 @@ class Lesson {
 
 class _HomeScreenState extends State<HomeScreen> {
   GFListTile _buildCoolCard(
-      String ctitle, IconData cicon, String shortdes, int id) {
+      String ctitle, IconData cicon, String shortdes, String id) {
     return GFListTile(
         // https://docs.getwidget.dev/gf-tile/
-        avatar: GFAvatar(),
+        avatar: const GFAvatar(),
         titleText: ctitle,
         subTitleText: shortdes,
         onTap: () {
@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox.fromSize(
-          size: Size(70, 70),
+          size: const Size(70, 70),
           child: ClipOval(
             child: Material(
               color: Colors.amberAccent,
@@ -171,7 +171,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             ElevatedButtonTheme(
               data: ElevatedButtonThemeData(
-                  style: ElevatedButton.styleFrom(minimumSize: Size(113, 45))),
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(113, 45))),
               child: ButtonBar(
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -202,9 +203,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             if (!myLesson)
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
                 child: Text(
                   'Category',
@@ -221,21 +222,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                   flex: 2,
                   child: Padding(
-                    padding: EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: Text(
                       myLesson
                           ? 'My lesson'
                           : !trending
                               ? 'Learning'
                               : 'Trending',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 30.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ),
-                Container(
+                const SizedBox(
                   height: 100,
                   width: 50,
                 ),
@@ -253,6 +254,17 @@ class _HomeScreenState extends State<HomeScreen> {
             // FutureBuilder(builder: builder)
             // for (var i in lessonList)
             //   _buildCoolCard(i.title, Icons.local_pizza, i.subtitle)
+            if (myLesson)
+              TextButton(
+                style: TextButton.styleFrom(
+                    padding: const EdgeInsetsDirectional.all(50),
+                    backgroundColor: const Color.fromARGB(255, 182, 206, 240),
+                    onSurface: Colors.white),
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, Routes.myLesson);
+                },
+                child: const Text("New lesson"),
+              ),
 
             FutureBuilder<QuerySnapshot>(
               future: trending
@@ -265,7 +277,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (snapshot.hasData) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     log('hasData');
-                    return Center(
+                    return const Center(
                       widthFactor: 0.5,
                       heightFactor: 0.5,
                       child: CircularProgressIndicator(),
@@ -283,18 +295,18 @@ class _HomeScreenState extends State<HomeScreen> {
                               if (i["lesson_owner"] == 0)
                                 _buildCoolCard(
                                     i["lesson_title"],
-                                    Icons.local_pizza,
+                                    Icons.stacked_line_chart,
                                     i["lesson_subtitle"],
-                                    int.parse(i.id))
+                                    i.id)
                               else
                                 Container()
                           else
                             for (var i in documents)
                               _buildCoolCard(
                                   i["lesson_title"],
-                                  Icons.local_pizza,
+                                  Icons.stacked_line_chart,
                                   i["lesson_subtitle"],
-                                  int.parse(i.id))
+                                  i.id)
                         ],
                       );
                     }
@@ -308,10 +320,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 } else if (snapshot.hasError) {
                   log('hasData err');
 
-                  return Text('no data');
+                  return const Text('no data');
                 }
 
-                return CircularProgressIndicator();
+                return const CircularProgressIndicator();
               },
             ),
 
