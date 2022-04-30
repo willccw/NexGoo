@@ -4,6 +4,9 @@ import 'package:getwidget/getwidget.dart';
 import 'package:NexGoo/core/res/app.dart';
 import 'package:NexGoo/core/routes/routes.dart';
 
+import 'dart:developer';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({Key? key}) : super(key: key);
 
@@ -13,7 +16,7 @@ class CategoryScreen extends StatefulWidget {
 
 class _CatogaryState extends State<CategoryScreen> {
   Container _buildGFCard(String imageurl, String iconImage, String titlet,
-      String subtitlet, String contentt) {
+      String subtitlet, String contentt, int id) {
     return Container(
       child: GFCard(
         padding: const EdgeInsets.all(0),
@@ -27,6 +30,10 @@ class _CatogaryState extends State<CategoryScreen> {
         ),
         showImage: true,
         title: GFListTile(
+          onTap: () {
+            Navigator.of(context)
+                .pushReplacementNamed(Routes.detail, arguments: id);
+          },
           // avatar: GFAvatar(
           //   backgroundImage: AssetImage(iconImage),
           // ),
@@ -40,7 +47,7 @@ class _CatogaryState extends State<CategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Object? s = ModalRoute.of(context)!.settings.arguments;
+    Object? id = ModalRoute.of(context)!.settings.arguments;
 
     // TODO: implement build
     return Scaffold(
@@ -110,36 +117,83 @@ class _CatogaryState extends State<CategoryScreen> {
           crossAxisCount: 2,
           childAspectRatio: (0.273 / .40),
           children: <Widget>[
-            _buildGFCard(
-                AppConstants.lakeImage,
-                AppConstants.lakeImage,
-                "How to make a Pizza?",
-                "hi",
-                "I will teach you how to make a pizza in 3 days"),
-            _buildGFCard(
-                AppConstants.lakeImage,
-                AppConstants.lakeImage,
-                "How to make a Pizza?",
-                "hi",
-                "I will teach you how to make a pizza in 3 days"),
-            _buildGFCard(
-                AppConstants.lakeImage,
-                AppConstants.lakeImage,
-                "How to make a Pizza?",
-                "hi",
-                "I will teach you how to make a pizza in 3 days"),
-            _buildGFCard(
-                AppConstants.lakeImage,
-                AppConstants.lakeImage,
-                "How to make a Pizza?",
-                "hi",
-                "I will teach you how to make a pizza in 3 days"),
-            _buildGFCard(
-                AppConstants.lakeImage,
-                AppConstants.lakeImage,
-                "How to make a Pizza?",
-                "hi",
-                "I will teach you how to make a pizza in 3 days"),
+            FutureBuilder<QuerySnapshot>(
+              future: FirebaseFirestore.instance
+                  .collection('Lesson')
+                  .where("lesson_category", isEqualTo: int.parse(id.toString()))
+                  .get(),
+              builder: (BuildContext context, snapshot) {
+                if (snapshot.hasData) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      widthFactor: 0.1,
+                      heightFactor: 0.1,
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    final List<QueryDocumentSnapshot<Object?>>? documents =
+                        snapshot.data?.docs;
+                    if (documents != null) {
+                      log(documents.length.toString());
+                      return ListView(
+                        children: [
+                          for (var i in documents)
+                            _buildGFCard(
+                                AppConstants.lakeImage,
+                                AppConstants.lakeImage,
+                                i["lesson_title"],
+                                i["lesson_subtitle"],
+                                "I will teach you how to make a pizza in 3 days",
+                                int.parse(i.id))
+                        ],
+                      );
+                    }
+                    // for (var i in lessonList)
+                    //   _buildCoolCard(i.title, Icons.local_pizza, i.subtitle);
+                  }
+                  //   return Center(
+                  //       // here only return is missing
+                  //       // child: Text(snapshot.data['email']));
+                  // }
+                } else if (snapshot.hasError) {
+                  return Text('no data');
+                }
+                log("keep loading gprint1");
+
+                return CircularProgressIndicator();
+              },
+            ),
+
+            // _buildGFCard(
+            //     AppConstants.lakeImage,
+            //     AppConstants.lakeImage,
+            //     "How to make a Pizza?",
+            //     "hi",
+            //     "I will teach you how to make a pizza in 3 days"),
+            // _buildGFCard(
+            //     AppConstants.lakeImage,
+            //     AppConstants.lakeImage,
+            //     "How to make a Pizza?",
+            //     "hi",
+            //     "I will teach you how to make a pizza in 3 days"),
+            // _buildGFCard(
+            //     AppConstants.lakeImage,
+            //     AppConstants.lakeImage,
+            //     "How to make a Pizza?",
+            //     "hi",
+            //     "I will teach you how to make a pizza in 3 days"),
+            // _buildGFCard(
+            //     AppConstants.lakeImage,
+            //     AppConstants.lakeImage,
+            //     "How to make a Pizza?",
+            //     "hi",
+            //     "I will teach you how to make a pizza in 3 days"),
+            // _buildGFCard(
+            //     AppConstants.lakeImage,
+            //     AppConstants.lakeImage,
+            //     "How to make a Pizza?",
+            //     "hi",
+            //     "I will teach you how to make a pizza in 3 days"),
           ],
         ),
       ),
