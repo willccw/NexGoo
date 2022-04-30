@@ -93,6 +93,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  bool trending = false;
+  bool myLesson = false;
   Widget build(BuildContext context) {
     List<Lesson> lessonList = [];
 
@@ -175,42 +177,57 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   ElevatedButton(
                     child: const Text('Discover'),
-                    onPressed: () {},
+                    onPressed: () =>
+                        setState(() => {trending = false, myLesson = false}),
                   ),
-                  const ElevatedButton(
-                    child: Text('Trending'),
-                    onPressed: null,
+                  ElevatedButton(
+                    child: const Text('Trending'),
+                    onPressed: () =>
+                        setState(() => {trending = true, myLesson = false}),
+
+                    //   log(trending.toString());
+                    //   // Navigator.pushReplacementNamed(context, Routes.myLesson);
+                    // },
                   ),
                   ElevatedButton(
                     child: const Text('My Lessons'),
-                    onPressed: () {
-                      log('dddkkk');
-                      Navigator.pushReplacementNamed(context, Routes.myLesson);
-                    },
+                    onPressed: () =>
+                        setState(() => {trending = false, myLesson = true}),
+
+                    // onPressed: () {
+                    //   log('dddkkk');
+                    //   Navigator.pushReplacementNamed(context, Routes.myLesson);
+                    // },
                   ),
                 ],
               ),
             ),
             SizedBox(height: 20.0),
-            const Padding(
-              padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
-              child: Text(
-                'Category',
-                style: TextStyle(
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.bold,
+            if (!myLesson)
+              Padding(
+                padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
+                child: Text(
+                  'Category',
+                  style: TextStyle(
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-            buttonSection,
+            if (!myLesson) buttonSection,
+
             Row(
               children: <Widget>[
-                const Expanded(
+                Expanded(
                   flex: 2,
                   child: Padding(
                     padding: EdgeInsets.all(16.0),
                     child: Text(
-                      'Learning',
+                      myLesson
+                          ? 'My lesson'
+                          : !trending
+                              ? 'Learning'
+                              : 'Trending',
                       style: TextStyle(
                         fontSize: 30.0,
                         fontWeight: FontWeight.bold,
@@ -238,7 +255,12 @@ class _HomeScreenState extends State<HomeScreen> {
             //   _buildCoolCard(i.title, Icons.local_pizza, i.subtitle)
 
             FutureBuilder<QuerySnapshot>(
-              future: FirebaseFirestore.instance.collection('Lesson').get(),
+              future: trending
+                  ? FirebaseFirestore.instance
+                      .collection('Lesson')
+                      .orderBy("lesson_viewCount", descending: true)
+                      .get()
+                  : FirebaseFirestore.instance.collection('Lesson').get(),
               builder: (BuildContext context, snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -254,17 +276,26 @@ class _HomeScreenState extends State<HomeScreen> {
                         snapshot.data?.docs;
                     if (documents != null) {
                       log(documents.length.toString());
-                      return Container(
-                        child: Column(
-                          children: [
+                      return Column(
+                        children: [
+                          if (myLesson)
+                            for (var i in documents)
+                              if (i["lesson_owner"] == 0)
+                                _buildCoolCard(
+                                    i["lesson_title"],
+                                    Icons.local_pizza,
+                                    i["lesson_subtitle"],
+                                    int.parse(i.id))
+                              else
+                                Container()
+                          else
                             for (var i in documents)
                               _buildCoolCard(
                                   i["lesson_title"],
                                   Icons.local_pizza,
                                   i["lesson_subtitle"],
                                   int.parse(i.id))
-                          ],
-                        ),
+                        ],
                       );
                     }
                     // for (var i in lessonList)

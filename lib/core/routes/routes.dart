@@ -1,3 +1,4 @@
+import 'package:NexGoo/pages/trending.dart';
 import 'package:flutter/material.dart';
 import 'package:NexGoo/pages/home.dart';
 import 'package:NexGoo/pages/detail.dart';
@@ -10,6 +11,7 @@ class Routes {
   static const detail = "/detail";
   static const category = "/category";
   static const myLesson = "/my_lesson";
+  static const trending = "/trending";
 }
 
 class RouterGenerator {
@@ -32,6 +34,10 @@ class RouterGenerator {
       case Routes.myLesson:
         return MaterialPageRoute(
           builder: (context) => const MyLessonScreen(),
+        );
+      case Routes.trending:
+        return MaterialPageRoute(
+          builder: (context) => const TrendingScreen(),
         );
       default:
         return MaterialPageRoute(
